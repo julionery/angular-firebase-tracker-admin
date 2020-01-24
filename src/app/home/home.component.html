@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Tracker Bus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/home">Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/clientes">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/usuarios">Usuários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/config">Configurações</a>
+            </li>
+        </ul>
+        <a class="navbar-brand" href="#">
+            <i class="material-icons">people</i>
+        </a>
+    </div>
+</nav>
+
+<nav class="navbar navbar-dark bg-dark">
+    <label class="navbar-brand">Início</label>
+</nav>
+
+<div class="row pad-10">
+
+    <div class="col-8">
+        <h3>
+            <small *ngIf="seguindoNome">Seguindo: {{ seguindoNome }}</small>
+        </h3>
+
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="14">
+            <agm-marker *ngFor="let frota of frotas" [latitude]="frota.lat" [longitude]="frota.lng"
+                        iconUrl="assets/imgs/busIcon.png">
+                <agm-info-window><strong>{{frota.nome}}</strong></agm-info-window>
+            </agm-marker>
+            <agm-polyline [strokeColor]="'#2196f3'">
+                <agm-polyline-point *ngFor="let rt of rota" [latitude]="rt.lat"
+                                    [longitude]="rt.lng"></agm-polyline-point>
+            </agm-polyline>
+        </agm-map>
+    </div>
+
+    <div class="col-4">
+        <h3>Frota</h3>
+
+        <div class="list-group">
+
+            <a href="#" (click)="seguir( $event, frota )" *ngFor="let frota of frotas"
+               class="list-group-item list-group-item-action">
+                <strong>{{ frota.nome }}</strong> <span style="font-size: 12px"> - Ult. Atualização: {{frota.data_atualizacao | date:'dd/MM/yyyy - HH:mm'}} </span>
+            </a>
+            <br>
+            <button *ngIf="seguindoNome" (click)="dejarDeSeguir($event)" class="btn btn-primary btn-block">
+                Deixar de Seguir
+            </button>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,179 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Tracker Bus</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Início</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/clientes">Clientes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/usuarios">Usuários</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/config">Configurações</a>
+      </li>
+    </ul>
+    <a class="navbar-brand" href="#">
+      <i class="material-icons">people</i>
+    </a>
+  </div>
+</nav>
+
+<nav class="navbar navbar-dark bg-dark">
+  <span class="navbar-brand">
+    <a class="nav-link" routerLink="/config">Institucional</a>
+  </span>
+  <h1 class="navbar-brand">
+        <a class="nav-link" routerLink="/config-empresa">Empresa</a>
+    </h1>
+  <span class="navbar-brand">
+            <a class="nav-link" routerLink="/config-servicos">Serviços</a>
+    </span>
+  <span class="navbar-brand">
+            <a class="nav-link" routerLink="/config-frota">Nossa Frota</a>
+    </span>
+  <span class="navbar-brand">
+            <a class="nav-link" routerLink="/config-fale-conosco">Fale Conosco</a>
+    </span>
+
+  <button class="btn btn-success" (click)="adicionar(adicionarModal)">Adicionar</button>
+
+</nav>
+
+<div style="padding: 20px">
+
+  <div class="alert alert-success" role="alert" *ngIf="closeResult">
+    {{closeResult}}
+  </div>
+
+  <div class="alert alert-danger" role="alert" *ngIf="errorResult">
+    {{errorResult}}
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Endereço</th>
+      <th scope="col">Status</th>
+      <th scope="col">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let empresa of empresas">
+        <th scope="row">{{empresa.titulo}}</th>
+        <td>{{empresa.descricao}}</td>
+        <td>{{empresa.endereco}}</td>
+        <td style="text-transform: capitalize">{{empresa.status}}</td>
+        <td>
+          <button class="btn btn-primary" (click)="editar(editarModal, empresa)">Editar</button>
+          <button class="btn btn-danger" (click)="deletar(modalDelete, empresa)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+
+
+<!-- Modal Adicionar -->
+<ng-template #adicionarModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Novo Empresa...</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label>Nome:</label>
+      <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="empresa.titulo"
+             placeholder="...">
+    </div>
+    <div class="form-group">
+      <label>Endereço:</label>
+      <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="empresa.endereco" placeholder="...">
+    </div>
+
+    <div class="form-group">
+      <label>Descrição:</label>
+      <input type="text" class="form-control" id="descricao" name="descricao" [(ngModel)]="empresa.descricao"
+             placeholder="...">
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success" [disabled]="empresa.titulo.length <= 3 || empresa.endereco.length <= 3"
+            (click)="c('Confimar')">Confimar
+    </button>
+    <button type="button" class="btn btn-outline-dark" (click)="d('Close click')">Cancelar</button>
+  </div>
+</ng-template>
+
+<!-- Modal Editando -->
+<ng-template #editarModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Editando...</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Nome:</label>
+      <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="emp.titulo"
+             placeholder="...">
+    </div>
+    <div class="form-group">
+      <label>Descrição:</label>
+      <input type="text" class="form-control" id="descricao" name="descricao" [(ngModel)]="emp.descricao"
+             placeholder="...">
+    </div>
+    <div class="form-group">
+      <label>Endereço:</label>
+      <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="emp.endereco" placeholder="...">
+    </div>
+    <div class="form-group">
+      <label>Status:</label>
+      <select class="form-control" id="status" name="status" [(ngModel)]="emp.status">
+        <option value="ativo">Ativo</option>
+        <option value="inativo">Inativo</option>
+      </select>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" [disabled]="emp.titulo.length <= 3 || emp.descricao.length <= 3"
+            (click)="c('Confimar')">Confimar
+    </button>
+    <button type="button" class="btn btn-outline-dark" (click)="d('Close click')">Cancelar</button>
+  </div>
+</ng-template>
+
+<!-- Modal Deletando -->
+<ng-template #modalDelete let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Confirmação - Exclusão</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Deseja excluir esta Frota: <b>{{empresa.titulo}}</b></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="c('Confimar')">Confimar</button>
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancelar')">Cancelar</button>
+  </div>
+</ng-template>

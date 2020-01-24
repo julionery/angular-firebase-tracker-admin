@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Tracker Bus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home">Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/clientes">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/usuarios">Usuários</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/config">Configurações</a>
+            </li>
+        </ul>
+        <a class="navbar-brand" href="#">
+            <i class="material-icons">people</i>
+        </a>
+    </div>
+</nav>
+
+<nav class="navbar navbar-dark bg-dark">
+    <h1 class="navbar-brand">
+        <a class="nav-link" routerLink="/config">Institucional</a>
+    </h1>
+    <span class="navbar-brand">
+        <a class="nav-link" routerLink="/config-empresa">Empresa</a>
+    </span>
+    <span class="navbar-brand">
+            <a class="nav-link" routerLink="/config-servicos">Serviços</a>
+    </span>
+    <span class="navbar-brand">
+            <a class="nav-link" routerLink="/config-frota">Nossa Frota</a>
+    </span>
+    <span class="navbar-brand">
+            <a class="nav-link" routerLink="/config-fale-conosco">Fale Conosco</a>
+    </span>
+
+    <button class="btn btn-success" (click)="salvar()">Salvar</button>
+</nav>
+
+<div style="padding: 20px">
+    <div class="alert alert-success" role="alert" *ngIf="closeResult">
+        {{closeResult}}
+    </div>
+
+    <div class="alert alert-danger" role="alert" *ngIf="errorResult">
+        {{errorResult}}
+    </div>
+
+    <div class="form-group row">
+        <label for="institucional" class="col-2 col-form-label">Institucional</label>
+        <div class="col-10">
+            <textarea class="form-control" id="institucional" name="institucional" [(ngModel)]="institucional.institucional" rows="7"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="missao" class="col-2 col-form-label">Missão</label>
+        <div class="col-10">
+            <textarea class="form-control" id="missao"  name="missao" [(ngModel)]="institucional.missao" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="visao" class="col-2 col-form-label">Visão</label>
+        <div class="col-10">
+            <textarea class="form-control" id="visao"  name="visao" [(ngModel)]="institucional.visao" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="valores" class="col-2 col-form-label">Valores</label>
+        <div class="col-10">
+            <textarea class="form-control" id="valores"  name="valores" [(ngModel)]="institucional.valores" rows="3"></textarea>
+        </div>
+    </div>
+
+</div>

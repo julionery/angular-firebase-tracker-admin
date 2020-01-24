@@ -1,0 +1,168 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Tracker Bus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home">Início</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/clientes">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/usuarios">Usuários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/config">Configurações</a>
+            </li>
+        </ul>
+        <a class="navbar-brand" href="#">
+            <i class="material-icons">people</i>
+        </a>
+    </div>
+</nav>
+
+<nav class="navbar navbar-dark bg-dark">
+    <label class="navbar-brand">Lista de Clientes (Empresas)</label>
+    <button class="btn btn-success" (click)="adicionar(adicionarModal)">Adicionar</button>
+</nav>
+
+<div style="padding: 20px">
+    <div class="alert alert-success" role="alert" *ngIf="closeResult">
+        {{closeResult}}
+    </div>
+
+    <div class="alert alert-danger" role="alert" *ngIf="errorResult">
+        {{errorResult}}
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">CPN / CNPJ</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Status</th>
+            <th scope="col">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr *ngFor="let cliente of clientes">
+            <th scope="row">{{cliente.codigo}}</th>
+            <td>{{cliente.nome}}</td>
+            <td>{{cliente.telefone}}</td>
+            <td>{{cliente.endereco}}</td>
+            <td style="text-transform: capitalize">{{cliente.status}}</td>
+            <td>
+                <button class="btn" (click)="abrir(cliente)">Frotas</button>
+                <button class="btn btn-primary" (click)="editar(editarModal, cliente)">Editar</button>
+                <button class="btn btn-danger" (click)="delete(modalDelete, cliente)">Excluir</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Modal Adicionar -->
+<ng-template #adicionarModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Novo Cliente...</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label>CPN / CNPJ:</label>
+            <input type="text" class="form-control" id="codigo" name="codigo" [(ngModel)]="cliente.codigo"
+                   placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="cliente.nome" placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Telefone:</label>
+            <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="cliente.telefone"
+                   placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Endereço:</label>
+            <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="cliente.endereco"
+                   placeholder="...">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success"
+                [disabled]="cliente.codigo.length <= 3 || cliente.nome.length <= 3" (click)="c('Confimar')">Confimar
+        </button>
+        <button type="button" class="btn btn-outline-dark" (click)="d('Close click')">Cancelar</button>
+    </div>
+</ng-template>
+
+<!-- Modal Editando -->
+<ng-template #editarModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Editando...</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label>CPN / CNPJ:</label>
+            <input type="text" class="form-control" disabled id="codigo" name="codigo" [(ngModel)]="client.codigo"
+                   placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="client.nome" placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Telefone:</label>
+            <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="client.telefone"
+                   placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Endereço:</label>
+            <input type="text" class="form-control" id="endereco" name="endereco" [(ngModel)]="client.endereco"
+                   placeholder="...">
+        </div>
+
+        <div class="form-group">
+            <label>Status:</label>
+            <select class="form-control" id="status" name="status" [(ngModel)]="client.status">
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="c('Confimar')">Confimar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="d('Close click')">Cancelar</button>
+    </div>
+</ng-template>
+
+<!-- Modal Deletando -->
+<ng-template #modalDelete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmação - Exclusão</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Deseja excluir este usuário: <b>{{cliente.nome}}</b></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="c('Confimar')">Confimar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="d('Cancelar')">Cancelar</button>
+    </div>
+</ng-template>

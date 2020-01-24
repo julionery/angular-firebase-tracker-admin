@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Tracker Bus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home">Início</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/clientes">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/usuarios">Usuários</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/config">Configurações</a>
+            </li>
+        </ul>
+        <a class="navbar-brand" href="#">
+            <i class="material-icons">people</i>
+        </a>
+    </div>
+</nav>
+
+<nav class="navbar navbar-dark bg-dark">
+    <span class="navbar-brand">
+        <a class="nav-link" routerLink="/config">Institucional</a>
+    </span>
+    <span class="navbar-brand">
+        <a class="nav-link" routerLink="/config-empresa">Empresa</a>
+    </span>
+    <span class="navbar-brand">
+            <a class="nav-link" routerLink="/config-servicos">Serviços</a>
+    </span>
+    <span class="navbar-brand">
+            <a class="nav-link" routerLink="/config-frota">Nossa Frota</a>
+    </span>
+    <h1 class="navbar-brand">
+            <a class="nav-link" routerLink="/config-fale-conosco">Fale Conosco</a>
+    </h1>
+
+    <button class="btn btn-success" (click)="salvar()">Salvar</button>
+</nav>
+
+<div class="form-group" style="padding: 20px">
+    <div class="alert alert-success" role="alert" *ngIf="closeResult">
+        {{closeResult}}
+    </div>
+
+    <div class="alert alert-danger" role="alert" *ngIf="errorResult">
+        {{errorResult}}
+    </div>
+    
+    <div class="form-group row">
+        <label for="email" class="col-2 col-form-label">E-mail</label>
+        <div class="col-10">
+            <input class="form-control" type="email"  id="email"  name="email" [(ngModel)]="fale_conosco.email" >
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="telefone" class="col-2 col-form-label">Telefone</label>
+        <div class="col-10">
+            <input class="form-control" type="tel"  id="telefone"  name="telefone" [(ngModel)]="fale_conosco.telefone" >
+        </div>
+    </div>
+
+    <label class="col-form-label">Link's:</label>
+    <div style="padding: 10px; border-radius: 2px; border-color: red">
+
+        <div class="form-group row">
+            <label for="site" class="col-2 col-form-label">URL - Site</label>
+            <div class="col-10">
+                <input class="form-control" type="url" id="site"  name="site" [(ngModel)]="fale_conosco.site" >
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="instagran" class="col-2 col-form-label">URL - Instagran</label>
+            <div class="col-10">
+                <input class="form-control" type="url" id="instagran"  name="instagran" [(ngModel)]="fale_conosco.instagran" >
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="facebook" class="col-2 col-form-label">URL - Facebook</label>
+            <div class="col-10">
+                <input class="form-control" type="url"  id="facebook"  name="facebook" [(ngModel)]="fale_conosco.facebook" >
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

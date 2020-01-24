@@ -1,0 +1,9 @@
+.pad-10 {
+    padding: 10px;
+}
+
+.user-box {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}

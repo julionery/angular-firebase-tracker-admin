@@ -1,0 +1,175 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Tracker Bus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home">Início</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="/clientes">Clientes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/usuarios">Usuários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/config">Configurações</a>
+            </li>
+        </ul>
+        <a class="navbar-brand" href="#">
+            <i class="material-icons">people</i>
+        </a>
+    </div>
+</nav>
+
+<nav class="navbar navbar-dark bg-dark">
+    <button class="btn" (click)="voltar()">Voltar</button>
+    <label class="navbar-brand">Lista de Frota - Cliente: {{id_cliente}} - {{nome_cliente}}</label>
+    <button class="btn btn-success" (click)="adicionar(adicionarModal)">Adicionar</button>
+</nav>
+
+<div style="padding: 20px">
+    <div class="alert alert-success" role="alert" *ngIf="closeResult">
+        {{closeResult}}
+    </div>
+
+    <div class="alert alert-danger" role="alert" *ngIf="errorResult">
+        {{errorResult}}
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Rota Padrão</th>
+            <th scope="col">Status</th>
+            <th scope="col">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let frota of frotas">
+            <th scope="row">{{frota.codigo}}</th>
+            <td>{{frota.nome}}</td>
+            <td>{{frota.rota_padrao}}</td>
+            <td style="text-transform: capitalize">{{frota.status}}</td>
+            <td>
+                <button class="btn" (click)="abrir(frota)">Rotas</button>
+                <button class="btn btn-primary" (click)="editar(editarModal, frota)">Editar</button>
+                <button class="btn btn-success" (click)="trocar(trocarModal, frota)">Trocar Cliente</button>
+                <button class="btn btn-danger" (click)="deletar(modalDelete, frota)">Excluir</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<!-- Modal Adicionar -->
+<ng-template #adicionarModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Novo Veículo...</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label>Código:</label>
+            <input type="text" class="form-control" id="codigo" name="codigo" [(ngModel)]="onibus.codigo"
+                   placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="onibus.nome" placeholder="...">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success" [disabled]="onibus.codigo.length <= 3 || onibus.nome.length <= 3"
+                (click)="c('Confimar')">Confimar
+        </button>
+        <button type="button" class="btn btn-outline-dark" (click)="d('Close click')">Cancelar</button>
+    </div>
+</ng-template>
+
+<!-- Modal Editando -->
+<ng-template #editarModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Editando...</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Código:</label>
+            <input type="text" class="form-control" id="codigo" name="codigo" [(ngModel)]="bus.codigo"
+                   placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="bus.nome" placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Rota Padrão:</label>
+            <input type="text" class="form-control" id="rota_padrao" name="rota_padrao" [(ngModel)]="bus.rota_padrao"
+                   placeholder="...">
+        </div>
+        <div class="form-group">
+            <label>Status:</label>
+            <select class="form-control" id="status" name="status" [(ngModel)]="bus.status">
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" [disabled]="bus.codigo.length <= 3 || onibus.nome.length <= 3"
+                (click)="c('Confimar')">Confimar
+        </button>
+        <button type="button" class="btn btn-outline-dark" (click)="d('Close click')">Cancelar</button>
+    </div>
+</ng-template>
+
+<!-- Modal Deletando -->
+<ng-template #modalDelete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmação - Exclusão</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Deseja excluir esta Frota: <b>{{onibus.nome}}</b></p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="c('Confimar')">Confimar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="d('Cancelar')">Cancelar</button>
+    </div>
+</ng-template>
+
+<!-- Modal Troca Empresa -->
+<ng-template #trocarModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Clientes (Empresas)</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let cliente of clientes" (click)="c(cliente.codigo)">{{cliente.nome}}
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="d('Close click')">Cancelar</button>
+    </div>
+</ng-template>
