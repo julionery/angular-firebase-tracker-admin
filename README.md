@@ -1,7 +1,7 @@
 <h3 align="center">
     <img alt="Logo" title="#logo" width="200px" src="https://github.com/julionery/ionic-firebase-tracker-app/blob/master/resources/icon.png?raw=true">
 </h3>
-<h2 align="center">Painel Administrativo Tracker</h2>
+<h1 align="center">Painel Administrativo Tracker</h1>
 
 Aplicação Web contendo o painel administrativo para o projeto Tracker ([Tracker App](https://github.com/julionery/ionic-firebase-tracker-app) e [Tracker Driver](https://github.com/julionery/ionic-firebase-tracker-driver)).
 
